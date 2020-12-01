@@ -1,5 +1,11 @@
 Rails.application.routes.draw do
   devise_for :users
   root to: 'pages#home'
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+
+  resources :blogs, only: [:create, :index, :show, :edit, :update, :new, :destroy] do
+    resources :reviews, only: [:create]
+  end
+  get "/disclosure", to: "pages#disclosure"
+  get "/faq", to: "pages#faq"
+  get "/insurance", to: "pages#insurance"
 end
