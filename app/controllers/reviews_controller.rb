@@ -4,17 +4,19 @@ class ReviewsController < ApplicationController
 
   def create
     @blog = Blog.find(params[:blog_id])
-    @review = Review.new(params[:review])
+    @review = Review.new(review_params)
     @review.blog = @blog
     @review.user = current_user
     if @review.save
-      flash[:success] = "Object successfully created"
+      flash[:success] = "Blog successfully created"
       redirect_to blog_path(@blog)
     else
       flash[:error] = "Something went wrong"
       render 'blog/show'
     end
   end
+
+  private
 
   def review_params
     # need to change varible

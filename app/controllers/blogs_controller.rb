@@ -1,11 +1,10 @@
 class BlogsController < ApplicationController
-
+  skip_before_action :authenticate_user!, only: [ :index, :show ]
   # need to fill in all the information
 
   def index
-    @blog = Blog.all
+    @blogs = Blog.all
   end
-  
 
   def create
     @object = Object.new(params[:object])
@@ -17,35 +16,33 @@ class BlogsController < ApplicationController
       render 'new'
     end
   end
-  
 
   def new
     @blog = Blog.new
   end
-  
+
   def edit
-    @ = .find()
+    @blog = Blog.find(params[:id])
   end
-  
 
   def show
-    @ = .find()
+    @blog = Blog.find(params[:id])
   end
-  
+
   def update
-    @object = Object.find(params[:id])
-      if @object.update_attributes(params[:object])
+    @blog = Blog.find(params[:id])
+      if @blog.update_attributes(params[:blog])
         flash[:success] = "Object was successfully updated"
-        redirect_to @object
+        redirect_to @blog
       else
         flash[:error] = "Something went wrong"
         render 'edit'
       end
   end
-  
+
   def destroy
-    @object = Object.find(params[:id])
-    if @object.destroy
+    @blog = Blog.find(params[:id])
+    if @blog.destroy
       flash[:success] = 'Object was successfully deleted.'
       redirect_to objects_url
     else
