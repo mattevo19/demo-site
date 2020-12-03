@@ -1,6 +1,16 @@
 <h1>blog page</h1>
-<% @blogs.each do |blog| %>
-  <%= link_to  blog.title , blog_path(blog) %>
-  <%= link_to  "edit", edit_blog_path(blog) %>
-  <%= link_to  "new", new_blog_path(blog) %>
+  <%= link_to  "new", new_blog_path %>
+  <ul>
+    <% @blogs.each do |blog| %>
+      <li>
+        <%= link_to  blog.title , blog_path(blog) %> <%= link_to  "edit", edit_blog_path(blog) %>
+        <%= link_to "delete", blog_path(blog), method: :delete, data: { confirm: "Are you sure?"} %>
+      </li>
+    <% end %>
+  </ul>
+
+<% flash.each do |type, msg| %>
+  <div class="alert alert-info">
+    <%= msg %>
+  </div>
 <% end %>

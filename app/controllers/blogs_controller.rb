@@ -7,10 +7,11 @@ class BlogsController < ApplicationController
   end
 
   def create
-    @object = Object.new(params[:object])
-    if @object.save
-      flash[:success] = "Object successfully created"
-      redirect_to @object
+    @blog = Blog.new(blog_params)
+    @blog.user = current_user
+    if @blog.save
+      flash[:success] = "Blog successfully created"
+      redirect_to @blog
     else
       flash[:error] = "Something went wrong"
       render 'new'
@@ -31,8 +32,8 @@ class BlogsController < ApplicationController
 
   def update
     @blog = Blog.find(params[:id])
-      if @blog.update_attributes(params[:blog])
-        flash[:success] = "Object was successfully updated"
+      if @blog.update_attributes(blog_params)
+        flash[:success] = "Blog was successfully updated"
         redirect_to @blog
       else
         flash[:error] = "Something went wrong"
@@ -43,11 +44,18 @@ class BlogsController < ApplicationController
   def destroy
     @blog = Blog.find(params[:id])
     if @blog.destroy
-      flash[:success] = 'Object was successfully deleted.'
-      redirect_to objects_url
+      flash[:success] = 'Blog was successfully deleted.'
+      redirect_to blogs_path
     else
       flash[:error] = 'Something went wrong'
-      redirect_to objects_url
+      redirect_to blogs_path
     end
   end
+
+  private
+
+  def blog_params
+    params.require(:blog).permit(:title, :description)
+  end
+
 end

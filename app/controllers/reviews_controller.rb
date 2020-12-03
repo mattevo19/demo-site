@@ -22,6 +22,4 @@ class ReviewsController < ApplicationController
     # need to change varible
     params.require(:review).permit(:variable)
   end
-
-  
 end
