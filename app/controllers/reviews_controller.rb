@@ -8,7 +8,7 @@ class ReviewsController < ApplicationController
     @review.blog = @blog
     @review.user = current_user
     if @review.save
-      flash[:success] = "Blog successfully created"
+      flash[:success] = "Review successfully added"
       redirect_to blog_path(@blog)
     else
       flash[:error] = "Something went wrong"
@@ -19,7 +19,6 @@ class ReviewsController < ApplicationController
   private
 
   def review_params
-    # need to change varible
-    params.require(:review).permit(:variable)
+    params.require(:review).permit(:description, :rating)
   end
 end

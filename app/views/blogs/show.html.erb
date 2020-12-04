@@ -1,6 +1,17 @@
 <h1><%= @blog.title %></h1>
-
 <p><%= @blog.description %></p>
+
+<%= simple_form_for [ @blog, @review ] do |f| %>
+  <%= f.input :description, label: "Review" %>
+  <%= f.input :rating, collection: 1..5, prompt: "Rating", as: :radio_buttons %>
+  <%= f.submit %>
+<% end %>
+
+<% @blog.reviews.each do |review| %>
+  <h2><%= review.description %></h2>
+  <p><%= review.rating %></p>
+<% end %>
+
 <% flash.each do |type, msg| %>
   <div class="alert alert-info">
     <%= msg %>
