@@ -44,6 +44,9 @@ class BlogsController < ApplicationController
 
   def destroy
     @blog = Blog.find(params[:id])
+    if @blog.photo.attached?
+      @blog.photo.purge
+    end
     if @blog.destroy
       flash[:success] = 'Blog was successfully deleted.'
       redirect_to blogs_path
@@ -56,7 +59,7 @@ class BlogsController < ApplicationController
   private
 
   def blog_params
-    params.require(:blog).permit(:title, :description)
+    params.require(:blog).permit(:title, :description, :photo)
   end
 
 end

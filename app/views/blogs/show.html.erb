@@ -1,5 +1,8 @@
 <h1><%= @blog.title %></h1>
 <p><%= @blog.description %></p>
+<% if @blog.photo.attached? %>
+  <%= cl_image_tag @blog.photo.key, height: 300, width: 400, crop: :fill %>
+<% end %>
 
 <%= simple_form_for [ @blog, @review ] do |f| %>
   <%= f.input :description, label: "Review" %>
